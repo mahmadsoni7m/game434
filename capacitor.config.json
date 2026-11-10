@@ -1,0 +1,9 @@
+{
+  "appId": "com.cybervoid.survivor",
+  "appName": "Cyber Void Survivor",
+  "webDir": "dist",
+  "android": {
+    "backgroundColor": "#020617",
+    "allowMixedContent": false
+  }
+}

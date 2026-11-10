@@ -1,0 +1,146 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-orbitron: 'Orbitron', monospace, sans-serif;
+    --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --ui-safe-top: env(safe-area-inset-top, 0px);
+    --ui-safe-right: env(safe-area-inset-right, 0px);
+    --ui-safe-bottom: env(safe-area-inset-bottom, 0px);
+    --ui-safe-left: env(safe-area-inset-left, 0px);
+    color-scheme: dark;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body, #root {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    position: fixed;
+    inset: 0;
+    background: #020617;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  button {
+    font: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button:focus-visible {
+    outline: 2px solid #67e8f9;
+    outline-offset: 3px;
+  }
+}
+
+.font-cyber { font-family: var(--font-orbitron); }
+.font-body { font-family: var(--font-jakarta); }
+.font-code { font-family: var(--font-mono); }
+
+.arcade-vignette {
+  background: radial-gradient(circle at center, transparent 65%, rgba(2, 6, 23, 0.75) 100%);
+  pointer-events: none;
+}
+
+/* Stable game viewport: never let browser chrome or system bars resize controls. */
+.game-viewport {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100%;
+  overflow: hidden;
+  position: fixed;
+  inset: 0;
+  contain: layout paint size;
+}
+
+/* All interactive controls retain a reliable touch target and do not collapse. */
+#root button {
+  flex-shrink: 0;
+  min-width: 44px;
+  min-height: 44px;
+  line-height: 1.2;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  transition-property: background-color, border-color, color, box-shadow, opacity;
+  transition-duration: 140ms;
+}
+
+#root button:active { filter: brightness(1.12); }
+#root button:disabled { opacity: .58; cursor: not-allowed; }
+
+/* Keep modal content usable on short phones and landscape displays. */
+.modal-scroll {
+  max-height: calc(100dvh - 24px - var(--ui-safe-top) - var(--ui-safe-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+}
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .modal-scroll { padding: 12px !important; }
+}
+
+@media (max-width: 600px) {
+  #root button { letter-spacing: .025em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* Virtual controls use fixed, device-independent targets on every phone size. */
+.touch-joystick {
+  width: clamp(104px, 17vmin, 142px);
+  height: clamp(104px, 17vmin, 142px);
+  min-width: 104px;
+  min-height: 104px;
+}
+.touch-joystick-knob {
+  width: clamp(44px, 7vmin, 58px);
+  height: clamp(44px, 7vmin, 58px);
+}
+.touch-action-stack { gap: clamp(10px, 2vmin, 16px); }
+.touch-action-button {
+  width: clamp(60px, 10vmin, 76px);
+  height: clamp(60px, 10vmin, 76px);
+  min-width: 60px !important;
+  min-height: 60px !important;
+  border-width: 2px;
+  box-shadow: 0 5px 18px rgba(0,0,0,.35);
+}
+.touch-action-button-nova { width: clamp(56px, 9vmin, 68px); height: clamp(56px, 9vmin, 68px); }
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .touch-joystick { width: 100px; height: 100px; min-width: 100px; min-height: 100px; }
+  .touch-joystick-knob { width: 42px; height: 42px; }
+  .touch-action-button { width: 58px; height: 58px; min-width: 58px !important; min-height: 58px !important; }
+  .touch-action-button-nova { width: 54px; height: 54px; min-width: 54px !important; min-height: 54px !important; }
+}
+
+#root button svg { flex: 0 0 auto; }
+#root button span { min-width: 0; }
+
+@media (max-width: 700px) and (orientation: landscape) {
+  .font-cyber { letter-spacing: .035em; }
+}
